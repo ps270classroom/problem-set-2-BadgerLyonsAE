@@ -71,7 +71,7 @@ incumbency_table
 knitr::kable(incumbency_table)
 ```
 
-There are 7,014 Canidates in the data set
+There are 7,014 Candidates in the data set
 
 
 \newpage
@@ -92,9 +92,35 @@ In the writeup, describe which type of candidate sponsored the most promoting ad
 
 ## Answer 2
 ```{r}
-party_incumbent_promote <- filter(fb_ads by "US House", "US Senate") |> 
-  summarize(promote_prop)
-filter
+party_incumbent_promote = fb_ads |> filter(office == "State House" | office == "State Senate") 
+
+
+promote_prop = party_incumbent_promote |>
+  group_by(party, incumbency) |>
+  summarise(
+    promote_prop = mean(ad_tone_promote, na.rm = TRUE)) 
+
+knitr::kable(promote_prop, digits = 3, col.names = c("Party", "Incumbency", "Promote_Prop"))
+
+```
+
+
+```{r}
+knitr::kable(mytable, col.names = c("R", "D", "Open Seat", "Challenger", "Incumbent"))
+
+summarise(avg ) |> 
+  n = "promote_prop"
+na.rm = TRUE 
+
+"party_incombent_promote"
+
+
+knitr::kable(my_table, col.names = c("R", "D", "Open Seat", "Challenger", "Incumbent"))
+
+na.rm = TRUE 
+
+knitr::kable(my_table, col.names = c("Variable 1", "Variable 2", ...))
+
 ```
 
 

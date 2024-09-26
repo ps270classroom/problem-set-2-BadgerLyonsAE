@@ -103,27 +103,7 @@ promote_prop = party_incumbent_promote |>
 knitr::kable(promote_prop, digits = 3, col.names = c("Party", "Incumbency", "Promote_Prop"))
 
 ```
-
-
-```{r}
-knitr::kable(mytable, col.names = c("R", "D", "Open Seat", "Challenger", "Incumbent"))
-
-summarise(avg ) |> 
-  n = "promote_prop"
-na.rm = TRUE 
-
-"party_incombent_promote"
-
-
-knitr::kable(my_table, col.names = c("R", "D", "Open Seat", "Challenger", "Incumbent"))
-
-na.rm = TRUE 
-
-knitr::kable(my_table, col.names = c("Variable 1", "Variable 2", ...))
-
-```
-
-
+Democratic incumbents sponsored the most promoting ads on average
 
 \newpage
 
@@ -138,8 +118,32 @@ Create a histogram of this variable for just the US House races. Save the ggplot
 
 ## Answer 3
 
+```{r}
+impressions_millions = (total facebook ad impressions_millions) 
+save the resulitng data set back as fb_ads
+
+histogram
+```
+
+```{r}
+fb_ads = fb_ads |>
+  mutate(impressions_millions = impressions/1000000)
+
+fb_ads_house <- fb_ads |>
+  filter(office == "US House") 
 
 
+plot_q3 <- ggplot(fb_ads_house, aes(x = impressions_millions)) +
+  geom_histogram( fill = "blue", color = "black") +
+  labs(
+    title = "Facebook Ad Impressions (in Millions) for US House Races",
+    x = "Impressions (Millions)",
+    y = "Count"
+  )
+
+print(plot_q3)
+```
+The Histogram above is steeply right skewed and shows that almost none of US House races have over 10 million add impressions 
 \newpage
 
 ## Question 4 (13 points)
@@ -160,6 +164,18 @@ You do not need to exactly match the labels, but you should have informative lab
  **Rubric:** 3pts for correct axes (autograder); 3pts for correct data fed into `ggplot` (autograder); 3pts for the correct ordering of the y-axis (PDF); 3pts for fill being mapped to `party` (autograder); 1pt for plot being in knitted output and having informative labels (PDF)
 
 ## Answer 4
+```{r}
+fb_top_plot = fb_ads |> 
+  ggplot(fb_ads_house, aes(x = impressions_millions)+
+                                 barplot(scale_fill_manual(values = c(R = "red", D = "blue")), + 
+           labs( title =  "Top 15 House Canidate Facebook Ad Impressions, 2017-2018", 
+                 x = impressions_millions, y = cand_name_last)  
+
+
+
+
+fb_top_plot
+```
 
 
 

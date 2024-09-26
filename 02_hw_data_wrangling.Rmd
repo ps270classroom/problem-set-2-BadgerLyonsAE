@@ -48,16 +48,11 @@ library(tidyverse)
 library(ps270data)
 library(dplyr)
 library(readr)
-```
 
 
-```{r}
 fb_ads <- read_csv("data/fb_ads.csv")
 fb_ads
-```
 
-
-```{r}
 incumbency_table <- fb_ads |>
   group_by(incumbency) |> 
   count(incumbency)

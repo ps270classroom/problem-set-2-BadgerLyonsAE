@@ -169,19 +169,35 @@ fb_top_plot = fb_ads |>
   ggplot(fb_ads_house, aes(x = impressions_millions)+
                                  barplot(scale_fill_manual(values = c(R = "red", D = "blue")), + 
            labs( title =  "Top 15 House Canidate Facebook Ad Impressions, 2017-2018", 
-                 x = impressions_millions, y = cand_name_last)  
-
-
-
+                 x = impressions_millions, y = cand_name_last)
 
 fb_top_plot
 ```
 
+```{r}
+top_15_house <- fb_ads |>
+  filter(office == "US House") |>
+  arrange(desc(impressions_millions)) |>
+  slice(1:15) 
+
+
+top_15_house <- top_15_house |>
+  mutate(cand_name_last = reorder(cand_name_last, impressions_millions))
+
+fb_top_plot <- ggplot(top_15_house, aes(x = impressions_millions, y = cand_name_last, fill = party)) +
+  geom_bar(stat = "identity") + 
+  scale_fill_manual(values = c(R = "red", D = "steelblue")) + 
+  labs(
+    title = "Top 15 US House Candidates by Facebook Ad Impressions",
+    x = "Ad Impressions In Millions",
+    y = "Candidate Last Name")
+
+fb_top_plot
+
+```
 
 
 \newpage
-
-
 
 # Code
 

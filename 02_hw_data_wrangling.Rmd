@@ -3,8 +3,7 @@ title: "Problem Set 2: Data Wrangling"
 author: ArwenLyons
 output: pdf_document
 ---
-
-
+#setup
 ```{r setup, include = FALSE}
 options(width = 100)
 ```
@@ -48,7 +47,6 @@ Use `dplyr` functions to create a table with the number of candidates in each ty
 library(tidyverse)
 library(ps270data)
 library(dplyr)
-
 library(readr)
 ```
 
@@ -119,14 +117,12 @@ Create a histogram of this variable for just the US House races. Save the ggplot
 ## Answer 3
 
 ```{r}
-fb_ads = fb_ads |>
+fb_ads <- fb_ads |>
   mutate(impressions_millions = impressions/1000000)
 
-fb_ads_house <- fb_ads |>
-  filter(office == "US House") 
-
-
-plot_q3 <- ggplot(fb_ads_house, aes(x = impressions_millions)) +
+plot_q3 <- ggplot(data = fb_ads |>
+                    filter(office == "US House"), 
+                  mapping = aes(x = impressions_millions)) +
   geom_histogram( fill = "blue", color = "black") +
   labs(
     title = "Facebook Ad Impressions (in Millions) for US House Races",
@@ -134,7 +130,7 @@ plot_q3 <- ggplot(fb_ads_house, aes(x = impressions_millions)) +
     y = "Count"
   )
 
-print(plot_q3)
+plot_q3
 ```
 The Histogram above is steeply right skewed and shows that almost none of US House races have over 10 million add impressions 
 \newpage

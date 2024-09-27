@@ -157,7 +157,7 @@ top_15_house <- top_15_house |>
 
 fb_top_plot = ggplot(top_15_house, aes(x = impressions_millions, y = cand_name_last, fill = party)) +
   geom_bar(stat = "identity") + 
-  scale_fill_manual(values = c(R = "red", D = "steelblue")) + 
+  scale_fill_manual(values = c(R = "red", D = "blue")) + 
   labs(
     title = "Top 15 US House Candidates by Facebook Ad Impressions",
     x = "Ad Impressions In Millions",

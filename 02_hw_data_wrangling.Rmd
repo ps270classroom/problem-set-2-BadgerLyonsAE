@@ -1,7 +1,9 @@
 ---
-title: "Problem Set 2: Data Wrangling"
-author: ArwenLyons
-output: pdf_document
+title: 'Problem Set 2: Data Wrangling'
+author: "ArwenLyons"
+output:
+  html_document:
+    df_print: paged
 ---
 #setup
 ```{r setup, include = FALSE}

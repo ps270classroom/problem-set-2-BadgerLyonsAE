@@ -54,12 +54,10 @@ Use `dplyr` functions to create a table with the number of candidates in each ty
 fb_ads <- read_csv("data/fb_ads.csv")
 
 incumbency_table <- fb_ads |>
-  count(incumbency)
-
-na.rm = TRUE
+  group_by(incumbency) |>
+  summarize(n = n())
 
 knitr::kable(incumbency_table)
-incumbency_table
 
 ```
 
@@ -87,10 +85,10 @@ In the writeup, describe which type of candidate sponsored the most promoting ad
 party_incumbent_promote <- fb_ads |> 
   filter(office == "US House" | office == "US Senate") |>
   group_by(party, incumbency) |>
-  summarize(promote_prop = mean(ad_tone_promote, na.rm = TRUE))
+  summarize(promote_prop = mean(ad_tone_promote, na.rm = T))
 
-knitr::kable(promote_prop, digits = 3, col.names = c("Party", "Incumbency", "Promote_Prop"))
-promote_prop
+knitr::kable(party_incumbent_promote, digits = 3, col.names = c("Party", "Incumbency", "Proportion of Promoting Ads"))
+
 ```
 On Average Democratic incumbents sponsored the most promoting ads 
 
@@ -114,16 +112,11 @@ fb_ads <- fb_ads |>
 plot_q3 = ggplot(data = fb_ads |>
                     filter(office == "US House"), 
                   mapping = aes(x = impressions_millions)) +
-  geom_histogram( fill = "blue", color = "black") +
-  labs(
-    title = "Facebook Ad Impressions (in Millions) for US House Races",
-    x = "Impressions (Millions)",
-    y = "Count"
-  )
+  geom_histogram()
 
 plot_q3
 ```
-The Histogram above is steeply right skewed and shows that almost none of US House races have over 10 million add impressions 
+The Histogram above is steeply right skewed and shows that almost none of US House races have over 10 million ad impressions 
 \newpage
 
 ## Question 4 (13 points)
@@ -154,8 +147,10 @@ fb_top_plot <- ggplot(house_top_15,
                       mapping = aes(x = impressions_millions, y = 
 fct_reorder(cand_name_last, impressions_millions))) +
   geom_col(mapping = aes(fill = party)) +
-    scale_fill_manual(values = c(D = "steelblue", R = "red")) +
-  labs(title = "Top 15 US House Canidates By Facebook Ad Impressions, 2017 - 2018" , x = "Facebook Ad Impressions in Millions", Y = "")
+    scale_fill_manual(values = c(D = "blue", R = "red")) +
+  labs(title = "Top 15 US House Canidates By Facebook Ad Impressions, 2017 - 2018" ,
+       x = "Facebook Ad Impressions in Millions",
+       Y = "")
 
 fb_top_plot
 

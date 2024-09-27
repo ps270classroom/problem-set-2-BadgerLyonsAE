@@ -82,12 +82,10 @@ In the writeup, describe which type of candidate sponsored the most promoting ad
 
 ## Answer 2
 ```{r}
-party_incumbent_promote <- fb_ads |> filter(office == "State House" | office == "State Senate") 
-
-promote_prop = party_incumbent_promote |>
+party_incumbent_promote <- fb_ads |> 
+  filter(office == "US House" | office == "US Senate") |>
   group_by(party, incumbency) |>
-  summarise(
-    promote_prop = mean(ad_tone_promote, na.rm = TRUE)) 
+  summarize(promote_prop = mean(ad_tone_promote, na.rm = TRUE))
 
 knitr::kable(promote_prop, digits = 3, col.names = c("Party", "Incumbency", "Promote_Prop"))
 promote_prop
@@ -146,22 +144,16 @@ You do not need to exactly match the labels, but you should have informative lab
 ## Answer 4
 
 ```{r}
-top_15_house <- fb_ads |>
+house_top_15 <- fb_ads |>
   filter(office == "US House") |>
-  arrange(desc(impressions_millions)) |>
-  slice(1:15) 
+  slice_max(impressions_millions, n = 15)
 
-
-top_15_house <- top_15_house |>
-  mutate(cand_name_last = reorder(cand_name_last, impressions_millions))
-
-fb_top_plot = ggplot(top_15_house, aes(x = impressions_millions, y = cand_name_last, fill = party)) +
-  geom_bar(stat = "identity") + 
-  scale_fill_manual(values = c(R = "red", D = "blue")) + 
-  labs(
-    title = "Top 15 US House Candidates by Facebook Ad Impressions",
-    x = "Ad Impressions In Millions",
-    y = "Candidate Last Name")
+fb_top_plot <- ggplot(house_top_15,
+                      mapping = aes(x = impressions_millions, y = 
+fct_reorder(cand_name_last, impressions_millions))) +
+  geom_col(mapping = aes(fill = party)) +
+    scale_fill_manual(values = c(D = "steelblue", R = "red")) +
+  labs(title = "Top 15 US House Canidates By Facebook Ad Impressions, 2017 - 2018" , x = "Facebook Ad Impressions in Millions", Y = "")
 
 fb_top_plot
 

@@ -31,7 +31,7 @@ Political advertising has traditionally been focused on the medium of television
 
 
 ```{r}
-
+library(tidyverse)
 library(dplyr)
 library(readr)
 ```
